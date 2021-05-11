@@ -63,6 +63,16 @@ For example:
 
 Once you have a cache you can use all the methods defined in [javax.Cache](https://github.com/jsr107/jsr107spec/blob/master/src/main/java/javax/cache/Cache.java)
 
+## Interesting bits
+
+### 'all' methods
+
+For 'all' methods we launch each requesy individually and the use a callback to count and manage the responses
+
+### 'invoke' methods
+
+For 'invoke' methods we load the class files containing the EntryProcessor code into VoltDB prior to excution.
+
 ## Known Limitations
 
 ### Sync operations
@@ -97,4 +107,5 @@ Any class that implements EntryProcessor can be used by Invoke,  but implementor
 ## Next Steps
 
 * We're looking at an async extension
+* We're looking at pessimistic locking
 
