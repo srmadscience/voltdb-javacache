@@ -15,7 +15,7 @@ This API is used as a basis for multiple imlementations:
 
 VoltDBCache doesn't actually cache anything. Instead it's a cunningly disguised API for VoltDB.
 
-Internally data is stored in a VoltDB [Table](src/master/src/org/voltdb/jsr107/VoltDBCache.java):
+Internally data is stored in a VoltDB Table:
 
     CREATE TABLE kv 
     (c varchar(30) not null 
