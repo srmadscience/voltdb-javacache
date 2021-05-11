@@ -67,11 +67,15 @@ Once you have a cache you can use all the methods defined in [javax.Cache](https
 
 ### 'all' methods
 
-For 'all' methods we launch each requesy individually and the use a callback to count and manage the responses
+For 'all' methods we launch each request individually and the use a callback to count and manage the responses
 
 ### 'invoke' methods
 
-For 'invoke' methods we load the class files containing the EntryProcessor code into VoltDB prior to excution.
+For 'invoke' methods we load the class files containing the EntryProcessor code into VoltDB prior to execution.
+
+### Event Listener
+
+We use VoltDB's topics to implement the Event Listeners.
 
 ## Known Limitations
 
