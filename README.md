@@ -83,7 +83,7 @@ These methods assume code that implements [EntryProcessor](https://github.com/js
 
 ### iterator will fail if asked to return > 50MB of data
 
-the iterator() method attempts to unload the entire contents of the Cache into a data structure, which is not a great idea if you are suing VoltDB. It will work on small caches but throw a 'Too Much Data Requesrted' CacheException otherwise.
+the iterator() method attempts to unload the entire contents of the Cache into a data structure, which is not a great idea if you are using VoltDB. It will work on small caches but throw a 'Too Much Data Requesrted' CacheException otherwise.
 
 ### EntryProcessor
 
