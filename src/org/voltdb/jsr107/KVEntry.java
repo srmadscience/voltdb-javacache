@@ -16,14 +16,12 @@ public class KVEntry implements Cache.Entry<String,byte[]>{
 
     @Override
     public String getKey() {
-        // TODO Auto-generated method stub
-        return null;
+        return key;
     }
 
     @Override
     public byte[] getValue() {
-        // TODO Auto-generated method stub
-        return null;
+        return value;
     }
 
     @Override

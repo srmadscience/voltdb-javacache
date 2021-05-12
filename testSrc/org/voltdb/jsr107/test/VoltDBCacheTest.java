@@ -35,6 +35,8 @@ import java.util.Set;
 
 import javax.cache.CacheException;
 import javax.cache.CacheManager;
+import javax.cache.Cache.Entry;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -895,9 +897,41 @@ class VoltDBCacheTest {
             createBarEntry();
 
             int entryCount = 0;
+            
+            Iterator<?> theIterator = c.iterator();
 
-            while (c.iterator().hasNext()) {
+            while (theIterator.hasNext()) {
+                Entry<String, byte[]> theEntry = (Entry<String, byte[]>) theIterator.next();
                 entryCount++;
+                
+                if (theEntry.getKey() == null) {
+                    fail("null key");
+                }
+                
+                if (theEntry.getValue() == null) {
+                    fail("null value");
+                }
+                
+               
+                if (theEntry.getKey().equals(FOO)) {
+                    byte[] actualPayload = theEntry.getValue();
+
+                    if (!Arrays.equals(actualPayload, FOO_BYTES)) {
+                        fail("iterator - payload changed");
+                    }
+
+                } else if (theEntry.getKey().equals(BAR)) {
+                    byte[] actualPayload = theEntry.getValue();
+
+                    if (!Arrays.equals(actualPayload, BAR_BYTES)) {
+                        fail("iterator - payload changed");
+                    }
+
+                } else {
+                    fail("iterator - extra payload " + theEntry.getKey());
+                }
+                
+                
             }
 
             if (entryCount != 2) {

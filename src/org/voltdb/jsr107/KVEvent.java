@@ -38,6 +38,7 @@ import org.voltdb.autojar.IsNeededByAVoltDBProcedure;
 
 import jsr107.AbstractEventTrackingProcedure;
 
+@SuppressWarnings("rawtypes")
 @IsNeededByAVoltDBProcedure
 public class KVEvent extends CacheEntryEvent<String, byte[]> implements Iterable {
 
