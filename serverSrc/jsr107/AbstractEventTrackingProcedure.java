@@ -59,7 +59,7 @@ public abstract class AbstractEventTrackingProcedure extends VoltProcedure {
 
     public static final SQLStmt exportEvent = new SQLStmt(
             "INSERT INTO kv_deltas\n"
-            + "(c,k,v,event_type)\n"
+            + "(c,k2,v,event_type)\n" //TODO
             + "VALUES \n"
             + "(?,?,?,?);");
     
