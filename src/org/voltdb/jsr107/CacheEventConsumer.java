@@ -60,7 +60,7 @@ public class CacheEventConsumer implements Runnable {
     /**
      * Keep running until told to stop..
      */
-    boolean keepGoing = true;
+    boolean keepGoing = true; // I think this should be AtomicBoolean as it'll be probably altered by a thread other than the consumer one
 
     CacheEntryListenerConfiguration<String, byte[]> celc;
 
@@ -107,6 +107,15 @@ public class CacheEventConsumer implements Runnable {
 
             Properties props = new Properties();
             props.put("bootstrap.servers", kafkaHostnames);
+            /*
+             Using cachename here might be risky. If we use this library in more than one place and provide the same cacheName,
+             each instance of the cache will receive only part of the updates as the rest will be routed to other instances.
+             What is more it might be the case that the updates made by one instances won't be received by it as it'll be
+             routed to other instance.
+
+             I'm not sure if that's what you wanted to achieve here, but it seems like we'd like to receive all updates
+             happening in VoltDB, but on the other hand that doesn't scale well as each instance would receive the whole traffic.
+             */
             props.put("group.id", cacheName);
             props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
             props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
@@ -146,12 +155,11 @@ public class CacheEventConsumer implements Runnable {
 
             }
 
-            consumer.close();
-
         } catch (Exception e1) {
             CacheEventConsumer.msg(e1);
         }
 
+        consumer.close();
     }
 
     /**
