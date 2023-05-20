@@ -29,6 +29,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.Date;
 import java.util.Properties;
 import javax.cache.configuration.CacheEntryListenerConfiguration;
@@ -60,7 +61,7 @@ public class CacheEventConsumer implements Runnable {
     /**
      * Keep running until told to stop..
      */
-    boolean keepGoing = true; // I think this should be AtomicBoolean as it'll be probably altered by a thread other than the consumer one
+    AtomicBoolean keepGoing = new AtomicBoolean(true);
 
     CacheEntryListenerConfiguration<String, byte[]> celc;
 
@@ -125,7 +126,7 @@ public class CacheEventConsumer implements Runnable {
 
         try {
 
-            while (keepGoing) {
+            while (keepGoing.get()) {
 
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100)); 
                 for (ConsumerRecord<String, String> record : records) {
@@ -167,7 +168,7 @@ public class CacheEventConsumer implements Runnable {
      * Stop polling for messages and exit.
      */
     public void stop() {
-        keepGoing = false;
+        keepGoing.set(false);
 
     }
 
