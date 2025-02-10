@@ -1,4 +1,10 @@
-
+--
+-- Copyright (C) 2025 Volt Active Data Inc.
+--
+-- Use of this source code is governed by an MIT
+-- license that can be found in the LICENSE file or at
+-- https://opensource.org/licenses/MIT.
+--
 
 load classes ../jars/cache-api-1.1.1.jar;
 
@@ -23,14 +29,12 @@ PARTITION TABLE kv ON COLUMN k;
 
 CREATE STREAM kv_deltas 
 PARTITION ON COLUMN k 
+EXPORT TO TOPIC kv_deltas_topic
+WITH KEY (c,k) VALUE (c,k,v)
 (c varchar(30) not null 
 ,k varchar(128)  not null
 ,v varbinary(1048576)
 ,event_type varchar(1));
-
-CREATE TOPIC USING STREAM kv_deltas
- PROPERTIES (consumer.keys='k');
-
 
 CREATE PROCEDURE 
 ContainsKey
